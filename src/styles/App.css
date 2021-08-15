@@ -9,6 +9,13 @@
     display:none;
 }
 
+.yesDiv{
+    position:absolute;
+    background-color: green;
+    margin:auto;
+    top:5px;
+}
+
 .selection{
     margin:2px;
     border: 1px solid black;

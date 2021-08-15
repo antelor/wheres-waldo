@@ -49,11 +49,12 @@ class App extends Component {
         e.clientX <= coord.x1 &&
         e.clientY >= coord.y0 &&
         e.clientY <= coord.y1) {
-          console.log("Bien!!!!");
-      }
-    
-    
-    
+          const yesDiv = document.createElement('div');
+          yesDiv.classList.add('yesDiv');
+          yesDiv.textContent = `Bien!!!!`;
+
+          document.querySelector('[id=root]').appendChild(yesDiv);       
+      }    
     
     document.querySelector('.dropMenu').classList.toggle('hidden');
   }
