@@ -26,7 +26,8 @@ class App extends Component {
 
     this.charListInit = this.charListInit.bind(this);
     this.checkSelection = this.checkSelection.bind(this);
-    this.removeChar=this.removeChar.bind(this);
+    this.removeChar = this.removeChar.bind(this);
+    this.getHiScores=this.getHiScores.bind(this);
   }
 
   //mostrar o esconder menu
@@ -43,7 +44,7 @@ class App extends Component {
     let newState = this.state;
 
     newState.chars = newState.chars.filter(function (item) {
-      return item.name != name;
+      return item.name !== name;
     });
     
     this.setState(newState);
@@ -114,11 +115,14 @@ class App extends Component {
     }, 1000);
 
     this.charListInit();
+
+    this.getHiScores();
   }
 
+  
   async charListInit() {
     let newState = this.state;
-
+    
     //query
     let charDocument = await firebase.firestore()
     .collection('charPositions')
@@ -126,7 +130,7 @@ class App extends Component {
     
     //pasar a array
     let charArray = charDocument.docs.map(doc => doc.data());
-
+    
     //por cada entrada agrego a charList
     charArray.forEach((item) => {
       newState.chars.push({
@@ -137,14 +141,27 @@ class App extends Component {
         y1: item.y1
       });
     });
-
+    
     this.setState(newState);
   }
-
+  
+  async getHiScores() {
+    //dbQuery
+    let hiDoc = await firebase.firestore()
+      .collection('hiScores')
+      .orderBy('score', 'desc')
+      .limit(10)
+      .get();
+    
+    //pasar a array
+    let hiArray = hiDoc.docs.map(doc => doc.data());
+    console.log(hiArray);
+  }
+  
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
+  
   render() {
     return (
       <div className="App">        
@@ -156,8 +173,8 @@ class App extends Component {
 
           </div>
           <ul>
-            {this.state.chars.map((item) => {
-              return <li><button onClick={this.checkSelection} name={item.name}>{item.name}</button></li>
+            {this.state.chars.map((item, index) => {
+              return <li key={ index }><button onClick={this.checkSelection} name={item.name}>{item.name}</button></li>
             })}
           </ul>
         </div>
