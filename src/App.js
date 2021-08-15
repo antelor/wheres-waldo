@@ -17,9 +17,12 @@ firebase.initializeApp(firebaseConfig);
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      score: 0
+    }
   }
 
-  
   toggleMenu(e) {
     let dropMenu = document.querySelector('.dropMenu');
     
@@ -67,9 +70,22 @@ class App extends Component {
     document.querySelector('.dropMenu').classList.toggle('hidden');
   }
 
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      let currScore = this.state.score;
+      this.setState({ score: currScore + 1 })
+    }, 1000);
+    console.log(this.state.score);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render() {
     return (
       <div className="App">        
+        <div className="score"> {this.state.score} a</div>
         <img className="mainImg" src={waldo} alt="wally" onClick={this.toggleMenu}/>
         <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
         <div className="dropMenu hidden">
