@@ -14,13 +14,20 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
+const charList = ['waldo', 'mage'];
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      score: 0
-    }
+      score: 0,
+      endScore: 0,
+      chars: charList,
+    };
+
+    this.checkSelection = this.checkSelection.bind(this);
+    this.removeChar=this.removeChar.bind(this);
   }
 
   toggleMenu(e) {
@@ -30,15 +37,39 @@ class App extends Component {
     dropMenu.style.left = (e.clientX - 20) + 'px';
     dropMenu.style.top = (e.clientY - 20) + 'px';
   }
+
+  removeChar(name) {
+    let newState = this.state;
+    newState.chars = newState.chars.filter(function (item) {
+      return item !== name;
+    });
+    
+    this.setState(newState);
+  }
+
+  checkWin() {
+    //si no quedan personajes, ganaste
+    if (this.state.chars.length === 0) {
+      //winDiv
+      const winDiv = document.createElement('div');
+      winDiv.classList.add('winDiv');
+      winDiv.textContent = 'Ganaste!!!!';
+      document.querySelector('[id=root]').appendChild(winDiv);       
+
+      //stop contador de score
+      clearInterval(this.interval);
+    }
+  }
   
   async checkSelection(e) {
+    
     let charDocument = await firebase.firestore()
-      .collection('charPositions')
-      .doc(e.target.name)
-      .get();
+    .collection('charPositions')
+    .doc(e.target.name)
+    .get();
     
     let charPositions = charDocument._delegate._document.data.value.mapValue.fields;
-
+    
     //separo coordenadas en objeto para hacer mas facil la lectura
     let coord = {
       x0: charPositions.x0.integerValue,
@@ -46,36 +77,42 @@ class App extends Component {
       y0: charPositions.y0.integerValue,
       y1: charPositions.y1.integerValue
     }
-
+    
     //chequeo de si la seleccion abarca el personaje
     if (e.clientX >= coord.x0 &&
-        e.clientX <= coord.x1 &&
-        e.clientY >= coord.y0 &&
-        e.clientY <= coord.y1) {
-          const yesDiv = document.createElement('div');
-          yesDiv.classList.add('yesDiv');
-          yesDiv.textContent = 'Bien!!!!';
-
-          document.querySelector('[id=root]').appendChild(yesDiv);       
+      e.clientX <= coord.x1 &&
+      e.clientY >= coord.y0 &&
+      e.clientY <= coord.y1)
+    {
+        //div yes
+        const yesDiv = document.createElement('div');
+        yesDiv.classList.add('yesDiv');
+        yesDiv.textContent = 'Bien!!!!';
+        document.querySelector('[id=root]').appendChild(yesDiv);       
+        
+        //borrar personaje de la charList
+        this.removeChar(e.target.name);
+      
+        this.checkWin();
     }
     else {
+      //div no
       const noDiv = document.createElement('div');
       noDiv.classList.add('noDiv');
       noDiv.textContent = 'Mal!!!!';
-
       document.querySelector('[id=root]').appendChild(noDiv);       
-
     }
     
+    //esconder dropdown
     document.querySelector('.dropMenu').classList.toggle('hidden');
   }
 
   componentDidMount() {
+    //score update
     this.interval = setInterval(() => {
       let currScore = this.state.score;
       this.setState({ score: currScore + 1 })
     }, 1000);
-    console.log(this.state.score);
   }
 
   componentWillUnmount() {

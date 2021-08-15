@@ -23,6 +23,13 @@
     top:5px;
 }
 
+.winDiv{
+    position:absolute;
+    background-color: blue;
+    margin:auto;
+    top:5px;
+}
+
 .selection{
     margin:2px;
     border: 1px solid black;
