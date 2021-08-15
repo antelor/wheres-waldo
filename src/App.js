@@ -156,8 +156,9 @@ class App extends Component {
 
           </div>
           <ul>
-            <li><button onClick={ this.checkSelection } name="waldo">Waldo</button></li>
-            <li><button onClick={ this.checkSelection } name="mage">Mago</button></li>
+            {this.state.chars.map((item) => {
+              return <li><button onClick={this.checkSelection} name={item.name}>{item.name}</button></li>
+            })}
           </ul>
         </div>
       </div>
