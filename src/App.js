@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import firebase from "firebase/app"
+import waldo from './waldo1.jpg'
+import './styles/App.css'
 
 const firebaseConfig = {
   apiKey: "AIzaSyDP4thDvNJD3geWDxkcFVOnZfZd31vqElo",
@@ -12,14 +14,17 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
 
 
   render() {
     return (
-      <div className="App">
-
-          aaaa
+      <div className="App">        
+        <img className="mainImg" src={waldo} alt="wally"/>
         <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+        <div className="dropMenu"></div>
       </div>
     );
   }
