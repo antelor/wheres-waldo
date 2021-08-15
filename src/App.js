@@ -26,6 +26,12 @@ class App extends Component {
     dropMenu.style.top = (e.clientY - 20) + 'px';
   }
 
+  checkSelection(e) {
+    console.log(e.target.name);
+
+    document.querySelector('.dropMenu').classList.toggle('hidden');
+  }
+
   render() {
     return (
       <div className="App">        
@@ -36,8 +42,8 @@ class App extends Component {
 
           </div>
           <ul>
-            <li>Waldo</li>
-            <li>Mago</li>
+            <li><button onClick={ this.checkSelection } name="waldo">Waldo</button></li>
+            <li><button onClick={ this.checkSelection } name="mage">Mago</button></li>
           </ul>
         </div>
       </div>
