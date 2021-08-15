@@ -16,6 +16,13 @@
     top:5px;
 }
 
+.noDiv{
+    position:absolute;
+    background-color: red;
+    margin:auto;
+    top:5px;
+}
+
 .selection{
     margin:2px;
     border: 1px solid black;

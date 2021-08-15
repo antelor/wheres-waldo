@@ -51,10 +51,18 @@ class App extends Component {
         e.clientY <= coord.y1) {
           const yesDiv = document.createElement('div');
           yesDiv.classList.add('yesDiv');
-          yesDiv.textContent = `Bien!!!!`;
+          yesDiv.textContent = 'Bien!!!!';
 
           document.querySelector('[id=root]').appendChild(yesDiv);       
-      }    
+    }
+    else {
+      const noDiv = document.createElement('div');
+      noDiv.classList.add('noDiv');
+      noDiv.textContent = 'Mal!!!!';
+
+      document.querySelector('[id=root]').appendChild(noDiv);       
+
+    }
     
     document.querySelector('.dropMenu').classList.toggle('hidden');
   }
