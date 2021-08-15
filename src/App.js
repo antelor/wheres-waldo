@@ -17,7 +17,16 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
+  
+  componentDidMount() {
+    document.querySelector('[class=mainImg]').addEventListener("click", function(e){
+      document.querySelector('[class=dropMenu]').style.backgroundColor = "red";
+      document.querySelector('[class=dropMenu]').style.left = e.clientX + 'px';
+      document.querySelector('[class=dropMenu]').style.top = e.clientY + 'px';
 
+
+    });
+  }
 
   render() {
     return (
