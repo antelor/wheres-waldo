@@ -17,24 +17,20 @@ class App extends Component {
   constructor(props) {
     super(props);
   }
-  
-  componentDidMount() {
-    document.querySelector('[class=mainImg]').addEventListener("click", function (e) {
-      let dropMenu = document.querySelector('.dropMenu');
 
-      dropMenu.classList.toggle('hidden');
-      
-      dropMenu.style.backgroundColor = "red";
-      dropMenu.style.left = (e.clientX - 20) + 'px';
-      dropMenu.style.top = (e.clientY - 20) + 'px';
+  toggleMenu(e) {
+    let dropMenu = document.querySelector('.dropMenu');
 
-    });
+    dropMenu.classList.toggle('hidden');
+    dropMenu.style.backgroundColor = "red";
+    dropMenu.style.left = (e.clientX - 20) + 'px';
+    dropMenu.style.top = (e.clientY - 20) + 'px';
   }
 
   render() {
     return (
       <div className="App">        
-        <img className="mainImg" src={waldo} alt="wally"/>
+        <img className="mainImg" src={waldo} alt="wally" onClick={this.toggleMenu}/>
         <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
         <div className="dropMenu hidden">
           <div className="selection">
