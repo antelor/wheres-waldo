@@ -19,11 +19,14 @@ class App extends Component {
   }
   
   componentDidMount() {
-    document.querySelector('[class=mainImg]').addEventListener("click", function(e){
-      document.querySelector('[class=dropMenu]').style.backgroundColor = "red";
-      document.querySelector('[class=dropMenu]').style.left = e.clientX + 'px';
-      document.querySelector('[class=dropMenu]').style.top = e.clientY + 'px';
+    document.querySelector('[class=mainImg]').addEventListener("click", function (e) {
+      let dropMenu = document.querySelector('.dropMenu');
 
+      dropMenu.classList.toggle('hidden');
+      
+      dropMenu.style.backgroundColor = "red";
+      dropMenu.style.left = (e.clientX - 20) + 'px';
+      dropMenu.style.top = (e.clientY - 20) + 'px';
 
     });
   }
@@ -33,7 +36,15 @@ class App extends Component {
       <div className="App">        
         <img className="mainImg" src={waldo} alt="wally"/>
         <script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
-        <div className="dropMenu"></div>
+        <div className="dropMenu hidden">
+          <div className="selection">
+
+          </div>
+          <ul>
+            <li>Waldo</li>
+            <li>Mago</li>
+          </ul>
+        </div>
       </div>
     );
   }
