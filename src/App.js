@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import firebase from "firebase/app"
+import 'firebase/firestore'
 import waldo from './waldo1.jpg'
 import './styles/App.css'
 
@@ -18,17 +19,27 @@ class App extends Component {
     super(props);
   }
 
+  
   toggleMenu(e) {
     let dropMenu = document.querySelector('.dropMenu');
-
+    
     dropMenu.classList.toggle('hidden');
     dropMenu.style.left = (e.clientX - 20) + 'px';
     dropMenu.style.top = (e.clientY - 20) + 'px';
   }
-
-  checkSelection(e) {
+  
+  async checkSelection(e) {
     console.log(e.target.name);
-
+    let charDocument = await firebase.firestore()
+      .collection('charPositions')
+      .doc(e.target.name)
+      .get();
+    
+    console.log(charDocument._delegate._document.data.value.mapValue.fields);
+    
+    
+    
+    
     document.querySelector('.dropMenu').classList.toggle('hidden');
   }
 
