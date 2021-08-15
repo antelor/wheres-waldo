@@ -67,9 +67,17 @@ class App extends Component {
       //hiScoresDiv
       const hiDiv = document.createElement('div');
       hiDiv.classList.add('hiDiv');
-      hiDiv.textContent = 'test';
-      document.querySelector('[id=root]').appendChild(hiDiv);
 
+      let scoreList = document.createElement('ul');
+      
+      this.state.hiScores.forEach((item) => {
+        let scoreItem = document.createElement('li');
+        scoreItem.textContent = `Nombre:${item.name} - Puntaje:${item.score}`;
+        scoreList.appendChild(scoreItem);
+      });
+      
+      hiDiv.appendChild(scoreList);
+      document.querySelector('[id=root]').appendChild(hiDiv);
     }
   }
   
@@ -165,7 +173,7 @@ class App extends Component {
     
     //pasar a array
     let hiArray = hiDoc.docs.map(doc => doc.data());
-
+ 
     hiArray.forEach((item) => {
       newState.hiScores.push({
         name: item.name,
