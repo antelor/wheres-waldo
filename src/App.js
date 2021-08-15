@@ -29,13 +29,28 @@ class App extends Component {
   }
   
   async checkSelection(e) {
-    console.log(e.target.name);
     let charDocument = await firebase.firestore()
       .collection('charPositions')
       .doc(e.target.name)
       .get();
     
-    console.log(charDocument._delegate._document.data.value.mapValue.fields);
+    let charPositions = charDocument._delegate._document.data.value.mapValue.fields;
+
+    //separo coordenadas en objeto para hacer mas facil la lectura
+    let coord = {
+      x0: charPositions.x0.integerValue,
+      x1: charPositions.x1.integerValue,
+      y0: charPositions.y0.integerValue,
+      y1: charPositions.y1.integerValue
+    }
+
+    //chequeo de si la seleccion abarca el personaje
+    if (e.clientX >= coord.x0 &&
+        e.clientX <= coord.x1 &&
+        e.clientY >= coord.y0 &&
+        e.clientY <= coord.y1) {
+          console.log("Bien!!!!");
+      }
     
     
     
