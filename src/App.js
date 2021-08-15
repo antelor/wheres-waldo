@@ -22,7 +22,6 @@ class App extends Component {
     let dropMenu = document.querySelector('.dropMenu');
 
     dropMenu.classList.toggle('hidden');
-    dropMenu.style.backgroundColor = "red";
     dropMenu.style.left = (e.clientX - 20) + 'px';
     dropMenu.style.top = (e.clientY - 20) + 'px';
   }

@@ -1,5 +1,8 @@
 .dropMenu{
     position: absolute;
+    border: 1px solid black;
+    padding:5px;
+    display: block;
 }
 
 .hidden{
@@ -11,4 +14,15 @@
     border: 1px solid black;
     width:40px;
     height:40px;
+}
+
+.dropMenu ul {
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
+}
+
+.dropMenu ul li{
+    list-style-type: none; /* Remove bullets */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margins */
 }
