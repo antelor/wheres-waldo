@@ -22,6 +22,7 @@ class App extends Component {
       score: 0,
       endScore: 0,
       chars: [],
+      hiScores: []
     };
 
     this.charListInit = this.charListInit.bind(this);
@@ -58,9 +59,17 @@ class App extends Component {
       const winDiv = document.createElement('div');
       winDiv.classList.add('winDiv');
       winDiv.textContent = 'Ganaste!!!!';
-      document.querySelector('[id=root]').appendChild(winDiv);       
+      document.querySelector('[id=root]').appendChild(winDiv);
+      
       //stop contador de score
       clearInterval(this.interval);
+
+      //hiScoresDiv
+      const hiDiv = document.createElement('div');
+      hiDiv.classList.add('hiDiv');
+      hiDiv.textContent = 'test';
+      document.querySelector('[id=root]').appendChild(hiDiv);
+
     }
   }
   
@@ -146,6 +155,7 @@ class App extends Component {
   }
   
   async getHiScores() {
+    let newState = this.state;
     //dbQuery
     let hiDoc = await firebase.firestore()
       .collection('hiScores')
@@ -155,7 +165,15 @@ class App extends Component {
     
     //pasar a array
     let hiArray = hiDoc.docs.map(doc => doc.data());
-    console.log(hiArray);
+
+    hiArray.forEach((item) => {
+      newState.hiScores.push({
+        name: item.name,
+        score: item.score,
+      });
+    });
+
+    this.setState(newState);
   }
   
   componentWillUnmount() {
